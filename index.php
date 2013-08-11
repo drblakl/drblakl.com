@@ -10,6 +10,7 @@
 
 		<!-- Bootstrap core CSS -->
 		<link href="/css/bootstrap.css" rel="stylesheet">
+		<link href="/css/navbar.css" rel="stylesheet">
 		<script>
 			$('#myTab a').click(function (e) {
 			  e.preventDefault();
