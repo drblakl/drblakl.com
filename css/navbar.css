@@ -1,3 +1,42 @@
 body {
 	padding: 30px;
 }
+
+/* navbar color */
+.navbar {
+	background-color: #061f70;
+}
+
+/* navbar Text color */
+.navbar-nav > li > a {
+	color: #6e86d6;
+}
+
+/* navbar Hover and Focus */
+.navbar-nav > li > a:hover,
+.navbar-nav > li > a:focus {
+  color: #ff7c00;
+  background-color: transparent;
+}
+
+/* navbar active */
+.navbar-nav > .active > a,
+.navbar-nav > .active > a:hover,
+.navbar-nav > .active > a:focus {
+  color: #ff7c00;
+  background-color: #6e86d6;
+}
+
+/* navbar title area */
+.navbar-brand{
+  	color: #ff7c00;
+	background-color:transparent;
+}
+
+/* navbar title area hover */
+.navbar-brand:hover,
+.navbar-brand:focus {
+  color: #ff7c00;
+  text-decoration: none;
+  background-color: transparent;
+}
