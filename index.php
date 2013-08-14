@@ -11,11 +11,37 @@
 		<!-- Bootstrap core CSS -->
 		<link href="/css/bootstrap.css" rel="stylesheet">
 		<link href="/css/navbar.css" rel="stylesheet">
+
+		<!-- Bootstrap core JavaScript ================================================== -->
+		<script src="/js/jquery.js"></script>
+		<script src="/js/bootstrap.js"></script>
 		<script>
-			$('#myTab a').click(function (e) {
-			  e.preventDefault();
-			  $(this).tab('show');
-			})
+			$(document).ready(function() {
+				$('#myTab a').click(function (e) {
+				  e.preventDefault();
+				  $(this).tab('show');
+				})
+			});
+
+			rssurl = "/blog/?feed=rss2";
+
+			$.get(rssurl, function(data) {
+				var $xml = $(data);
+				$xml.find("item").each(function() {
+					var $this = $(this),
+						item = {
+							title: $this.find("title").text(),
+							link: $this.find("link").text(),
+							description: $this.find("description").text(),
+							pubDate: $this.find("pubDate").text(),
+							author: $this.find("author").text(),
+							content: $this.find("encoded").text()
+					}
+					$('#blog').html($('#blog').html() + "<u><b>" + item.title + "</b></u>");
+					$('#blog').html($('#blog').html() + "<br/>");
+					$('#blog').html($('#blog').html() + item.content);
+				});
+			});
 		</script>
 	</head>
 
@@ -48,7 +74,7 @@
 				<h1>Minecraft coding adventures!</h1>
 				<div id="myTabContent" class="tab-content">
 					<div class="tab-pane fade in active" id="home">
-						<p>Check back for status updates and information related to minecraft mods currently in development</p>
+						<div class="blog" id="blog"></div>
 					</div>
 					<div class="tab-pane fade" id="about">
 						<p>I am in the process of learning all about minecraft mod development.  My successes and failures will be noted here.</p>
@@ -59,10 +85,5 @@
 				</div>
 			</div>
 		</div> <!-- /container -->
-
-		<!-- Bootstrap core JavaScript ================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="/js/jquery.js"></script>
-		<script src="/js/bootstrap.js"></script>
 	</body>
 </html>
