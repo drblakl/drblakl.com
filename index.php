@@ -21,27 +21,32 @@
 				  e.preventDefault();
 				  $(this).tab('show');
 				})
+
+				// Get Blog Contents
+				getBlog();
 			});
 
-			rssurl = "/blog/?feed=rss2";
+			function getBlog(){
+				rssurl = "/blog/?feed=rss2";
 
-			$.get(rssurl, function(data) {
-				var $xml = $(data);
-				$xml.find("item").each(function() {
-					var $this = $(this),
-						item = {
-							title: $this.find("title").text(),
-							link: $this.find("link").text(),
-							description: $this.find("description").text(),
-							pubDate: $this.find("pubDate").text(),
-							author: $this.find("author").text(),
-							content: $this.find("encoded").text()
-					}
-					$('#blog').html($('#blog').html() + "<u><b>" + item.title + "</b></u>");
-					$('#blog').html($('#blog').html() + "<br/>");
-					$('#blog').html($('#blog').html() + item.content);
+				$.get(rssurl, function(data) {
+					var $xml = $(data);
+					$xml.find("item").each(function() {
+						var $this = $(this),
+							item = {
+								title: $this.find("title").text(),
+								link: $this.find("link").text(),
+								description: $this.find("description").text(),
+								pubDate: $this.find("pubDate").text(),
+								author: $this.find("author").text(),
+								content: $this.find("encoded").text()
+						}
+						$('#blog').html($('#blog').html() + "<u><b>" + item.title + "</b></u>");
+						$('#blog').html($('#blog').html() + "<br/>");
+						$('#blog').html($('#blog').html() + item.content);
+					});
 				});
-			});
+			}
 		</script>
 	</head>
 
