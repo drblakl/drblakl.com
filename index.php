@@ -28,6 +28,7 @@
 
 			function getBlog(){
 				rssurl = "/blog/?feed=rss2";
+
 				$.get(rssurl, function(data) {
 					var $xml = $(data);
 					$xml.find("item").each(function() {
@@ -38,13 +39,50 @@
 								description: $this.find("description").text(),
 								pubDate: $this.find("pubDate").text(),
 								author: $this.find("author").text(),
-								content: $this.find("encoded").text()
+								content: $this.find("encoded").text(),
+								contentIE: $this.find("content\\:encoded").text()
 						}
+
 						$('#blog').html($('#blog').html() + "<u><b>" + item.title + "</b></u>");
 						$('#blog').html($('#blog').html() + "<br/>");
-						$('#blog').html($('#blog').html() + item.content);
+
+						if (getInternetExplorerVersion() != -1 ) {
+							$('#blog').html($('#blog').html() + item.contentIE);
+						}
+						else{
+							$('#blog').html($('#blog').html() + item.content);
+						}	
 					});
 				});
+			}
+
+			function getInternetExplorerVersion()
+			// Returns the version of Internet Explorer or a -1
+			// (indicating the use of another browser).
+			{
+			  var rv = -1; // Return value assumes failure.
+			  if (navigator.appName == 'Microsoft Internet Explorer')
+			  {
+				var ua = navigator.userAgent;
+				var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+				if (re.exec(ua) != null)
+				  rv = parseFloat( RegExp.$1 );
+			  }
+			  return rv;
+			}
+			function checkVersion()
+			{
+			  var msg = "You're not using Internet Explorer.";
+			  var ver = getInternetExplorerVersion();
+
+			  if ( ver > -1 )
+			  {
+				if ( ver >= 8.0 ) 
+				  msg = "You're using a recent copy of Internet Explorer."
+				else
+				  msg = "You should upgrade your copy of Internet Explorer.";
+			  }
+			  alert( msg );
 			}
 		</script>
 	</head>
