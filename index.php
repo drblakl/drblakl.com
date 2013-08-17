@@ -37,23 +37,31 @@
 								title: $this.find("title").text(),
 								link: $this.find("link").text(),
 								description: $this.find("description").text(),
-								pubDate: $this.find("pubDate").text(),
+								pubDate: new Date($this.find("pubDate").text()),
 								author: $this.find("author").text(),
 								content: $this.find("encoded").text(),
 								contentIE: $this.find("content\\:encoded").text()
 						}
 
-						$('#blog').html($('#blog').html() + "<u><b>" + item.title + "</b></u>");
-						$('#blog').html($('#blog').html() + "<br/>");
-
 						if (getInternetExplorerVersion() != -1 ) {
-							$('#blog').html($('#blog').html() + item.contentIE);
+							$('#blog').html($('#blog').html() + '<div class="panel panel-primary">'
+									+ '<div class="panel-heading"><h3 class="panel-title">' + item.title + ' - ' + item.pubDate + '</h3></div>'
+									+ '<div class="panel-body">' + item.contentIE + '</div></div>'
+							);
 						}
 						else{
-							$('#blog').html($('#blog').html() + item.content);
-						}	
+							$('#blog').html($('#blog').html() + '<div class="panel panel-primary">'
+									+ '<div class="panel-heading"><h3 class="panel-title">' + item.title + ' - ' + getDateWithoutTime(item.pubDate) + '</h3></div>'
+									+ '<div class="panel-body">' + item.content + '</div></div>'
+							);
+						}
 					});
 				});
+			}
+
+			function getDateWithoutTime(dateToFormat){
+				var splitDate = dateToFormat.toString().split(" ");
+				return splitDate[0] + " " + splitDate[1] + " " + splitDate[2] + " " + splitDate[3];
 			}
 
 			function getInternetExplorerVersion()
@@ -127,5 +135,7 @@
 				</div>
 			</div>
 		</div> <!-- /container -->
+
+
 	</body>
 </html>
