@@ -11,18 +11,22 @@
 		<!-- Bootstrap core CSS -->
 		<link href="/css/bootstrap.css" rel="stylesheet">
 		<link href="/css/navbar.css" rel="stylesheet">
+		<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
+		<link href="/css/prettify.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="/js/prettify.js"></script>
 
 		<!-- Bootstrap core JavaScript ================================================== -->
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.js"></script>
 		<script>
+
 			$(document).ready(function() {
 				$('#myTab a').click(function (e) {
 				  e.preventDefault();
 				  $(this).tab('show');
 				})
 
-				// Get Blog Contents
+				// Get Blog Contents and store within blog div
 				getBlog();
 			});
 
@@ -43,20 +47,13 @@
 								contentIE: $this.find("content\\:encoded").text()
 						}
 
-						if (getInternetExplorerVersion() != -1 ) {
-							$('#blog').html($('#blog').html() + '<div class="panel panel-primary">'
-									+ '<div class="panel-heading"><h3 class="panel-title">' + item.title + ' - ' + item.pubDate + '</h3></div>'
-									+ '<div class="panel-body">' + item.contentIE + '</div></div>'
-							);
-						}
-						else{
-							$('#blog').html($('#blog').html() + '<div class="panel panel-primary">'
-									+ '<div class="panel-heading"><h3 class="panel-title">' + item.title + ' - ' + getDateWithoutTime(item.pubDate) + '</h3></div>'
-									+ '<div class="panel-body">' + item.content + '</div></div>'
-							);
-						}
+						var content = getInternetExplorerVersion() != -1 ? item.contentIE : item.content;
+						$('#blog').html($('#blog').html() + '<div class="panel panel-primary">'
+								+ '<div class="panel-heading"><h3 class="panel-title">' + item.title + ' - ' + getDateWithoutTime(item.pubDate) + '</h3></div>'
+								+ '<div class="panel-body">' + content + '</div></div>'
+						);
 					});
-				});
+				}).always(function(){prettyPrint();});
 			}
 
 			function getDateWithoutTime(dateToFormat){
@@ -135,7 +132,5 @@
 				</div>
 			</div>
 		</div> <!-- /container -->
-
-
 	</body>
 </html>
