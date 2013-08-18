@@ -1,3 +1,5 @@
+<!-- Analytics -->
+<?php include_once("analyticstracking.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -19,6 +21,7 @@
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.js"></script>
 		<script>
+
 
 			$(document).ready(function() {
 				$('#myTab a').click(function (e) {
