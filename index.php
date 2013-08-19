@@ -20,8 +20,13 @@
 		<!-- Bootstrap core JavaScript ================================================== -->
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.js"></script>
-		<script>
 
+		<!-- Jquery Plugins -->
+		<!-- Loading Panel -->
+		<script type="text/javascript" src="/js/jquery.blockUI.js"></script>
+		<!-- RSS Feed -->
+		<script type="text/javascript" src="/js/jquery.zrssfeed.min.js"></script>
+		<script>
 
 			$(document).ready(function() {
 				$('#myTab a').click(function (e) {
@@ -31,12 +36,16 @@
 
 				// Get Blog Contents and store within blog div
 				getBlog();
+				
+				// Get GitHub RSS Feed
+				$('#gitrss').rssfeed('https://github.com/drblakl.atom', {limit:100});
 			});
 
 			function getBlog(){
 				rssurl = "/blog/?feed=rss2";
 
 				$.get(rssurl, function(data) {
+					$.blockUI({ overlayCSS: { backgroundColor: '#00f' } });
 					var $xml = $(data);
 					$xml.find("item").each(function() {
 						var $this = $(this),
@@ -52,11 +61,17 @@
 
 						var content = getInternetExplorerVersion() != -1 ? item.contentIE : item.content;
 						$('#blog').html($('#blog').html() + '<div class="panel panel-primary">'
-								+ '<div class="panel-heading"><h3 class="panel-title">' + item.title + ' - ' + getDateWithoutTime(item.pubDate) + '</h3></div>'
+								+ '<div class="panel-heading"><h3 class="panel-title"><a href="' + item.link + '">'
+								+ item.title + ' - ' + getDateWithoutTime(item.pubDate) + '</a></h3></div>'
 								+ '<div class="panel-body">' + content + '</div></div>'
 						);
 					});
-				}).always(function(){prettyPrint();});
+				}).always(
+					function(){
+						prettyPrint();
+						$.unblockUI();
+					}
+				);
 			}
 
 			function getDateWithoutTime(dateToFormat){
@@ -94,9 +109,7 @@
 			}
 		</script>
 	</head>
-
 	<body>
-
 		<div class="container">
 			<!-- Static navbar -->
 			<div class="navbar">
@@ -124,10 +137,14 @@
 				<h1>Minecraft coding adventures!</h1>
 				<div id="myTabContent" class="tab-content">
 					<div class="tab-pane fade in active" id="home">
-						<div class="blog" id="blog"></div>
+						<div id="blog"></div>
 					</div>
 					<div class="tab-pane fade" id="about">
 						<p>I am in the process of learning all about minecraft mod development.  My successes and failures will be noted here.</p>
+						<div class="panel panel-primary">
+							<div class="panel-heading"><h3 class="panel-title">GitHub Status</h3></div>
+							<div class="panel-body" id="gitrss"></div>
+						</div>
 					</div>
 					<div class="tab-pane fade" id="contact">
 						<p>You can reach me at <a href='mailto:drblakl@drblakl.com'>drblakl@drblakl.com</a></p>
