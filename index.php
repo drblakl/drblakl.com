@@ -36,9 +36,13 @@
 
 				// Get Blog Contents and store within blog div
 				getBlog();
+
+				var a = $('#sort option:selected').val();
+				var b = $('#direction option:selected').val();
+				var c = (b == 'asc') ? true : false;
 				
 				// Get GitHub RSS Feed
-				$('#gitrss').rssfeed('https://github.com/drblakl.atom', {limit:100});
+				$('#gitrss').rssfeed('https://github.com/drblakl.atom', {limit:100, sort: a, sortasc: c});
 			});
 
 			function getBlog(){
