@@ -48,8 +48,8 @@
 			function getBlog(){
 				rssurl = "/blog/?feed=rss2";
 
+				$.blockUI({ overlayCSS: { backgroundColor: '#00f' } });
 				$.get(rssurl, function(data) {
-					$.blockUI({ overlayCSS: { backgroundColor: '#00f' } });
 					var $xml = $(data);
 					$xml.find("item").each(function() {
 						var $this = $(this),
@@ -116,15 +116,16 @@
 	<body>
 		<div class="container">
 			<!-- Static navbar -->
-			<div class="navbar">
-			<div class="container">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/">drblakl.com</a>
-				<div class="nav-collapse collapse">
+			<div class="navbar navbar-default">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">drblakl.com</a>
+				</div>
+				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
 						<li><a href="#about" data-toggle="tab">About</a></li>
@@ -132,7 +133,6 @@
 					</ul>
 					<ul class="nav navbar-nav pull-right"></ul>
 				</div><!--/.nav-collapse -->
-			</div>
 			</div>
 
 			<!-- Main component for a primary marketing message or call to action -->
